@@ -11,7 +11,7 @@
 
     private function loadEnv() {
         // Assuming your .env file path is /etc/secrets/.env (remember security risks)
-        $envFilePath = '/etc/secrets/.env';
+        $envFilePath = '../etc/secrets/.env';
         $lines = file($envFilePath);
     
         foreach ($lines as $line) {
