@@ -1,6 +1,0 @@
-    SetEnv USERNAME "sean"
-    SetEnv PASSWORD "iteond35SvtZL8sMQ6vhP9DYPUf9h1a9"
-    SetEnv DBNAME "quotesdb_k7jm"
-    SetEnv HOST "dpg-cngl15n109ks73fv4i6g-a.oregon-postgres.render.com"
-    SetEnv PORT "5432"
-
