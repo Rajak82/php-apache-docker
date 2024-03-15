@@ -8,8 +8,23 @@
     private $dbname;
     private $username;
     private $password;
+
+    private function loadEnv() {
+        // Assuming your .env file path is /etc/secrets/.env (remember security risks)
+        $envFilePath = '/etc/secrets/.env';
+        $lines = file($envFilePath);
+    
+        foreach ($lines as $line) {
+          $line = trim($line);
+          if (strpos($line, '=') !== false) {
+            list($key, $value) = explode('=', $line, 2);
+            putenv("$key=$value");
+          }
+        }
+      }
     
     public function __construct() {
+        $this->loadEnv();  // Call the function to load environment variables
         $this->username = getenv('USERNAME');
         $this->password = getenv('PASSWORD');
         $this->dbname = getenv('DBNAME');
