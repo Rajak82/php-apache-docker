@@ -37,5 +37,5 @@
     }
 
     $test = new Database;
-    // $test->connect();
-    var_dump($test);
+    $test->connect();
+    //var_dump($test);
