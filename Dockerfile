@@ -2,7 +2,7 @@
 FROM php:8.2-apache
 
 
-ENV SERVER_NAME https://php-apache-docker-0d0y.onrender.com/
+ENV SERVER_NAME php-apache-docker-0d0y.onrender.com
 # Install required system packages and dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
