@@ -11,11 +11,11 @@
     
     public function __construct() {
         
-        $this->username = getenv('USERNAME');
-        $this->password = getenv('PASSWORD');
+        $this->username = getenv('DBUSERNAME');
+        $this->password = getenv('DBPASSWORD');
         $this->dbname = getenv('DBNAME');
-        $this->host = getenv('HOST');
-        $this->port = getenv('PORT');
+        $this->host = getenv('DBHOST');
+        $this->port = getenv('DBPORT');
     }
 
     public function connect(){
