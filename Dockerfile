@@ -1,7 +1,7 @@
 # Use an official PHP runtime as a parent image
 FROM php:8.2-apache
 
-ENV SERVER_NAME php-apache-docker-0d0y.onrender.com
+
 # Install required system packages and dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
