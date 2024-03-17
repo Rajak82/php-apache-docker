@@ -68,7 +68,7 @@
       array_push($quo_arr, $quo_item);
     }
 
-    echo 'created quote' . json_encode($quo_arr);
+    echo 'created quote' . htmlspecialchars_decode(json_encode($quo_arr));
   } else {
     echo json_encode(
       array('message' => 'Quote Not Created')
