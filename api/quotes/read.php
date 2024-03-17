@@ -49,8 +49,10 @@ if (isset($_GET['category_id'])){
     }
 
     // Turn to JSON & output
-    echo json_encode($quo_arr);
+    $json_data = json_encode($quo_arr);
 
+    // Decode HTML entities before echoing
+    echo htmlspecialchars_decode($json_data);
   } else {
     // No Posts
     echo json_encode(
