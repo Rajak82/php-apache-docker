@@ -6,29 +6,37 @@
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/Database.php';
-  include_once '../../models/Post.php';
+  include_once '../../models/Quote.php';
 
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
   // Instantiate blog post object
-  $post = new Post($db);
+  $quo = new DBQuote($db);
 
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
   // Set ID to update
-  $post->id = $data->id;
+  $quo->id = $data->id;
 
-  // Delete post
-  if($post->delete()) {
-    echo json_encode(
-      array('message' => 'Post Deleted')
-    );
-  } else {
-    echo json_encode(
-      array('message' => 'Post Not Deleted')
-    );
+  $test = curl_init('http://localhost/api/quotes/?id=' . $quo->id);
+  curl_setopt($test, CURLOPT_RETURNTRANSFER, true); // Set option to return the response
+  $response = curl_exec($test); // Execute the request and store the response
+  curl_close($test); // Close the cURL session
+  $test2 = array_values(json_decode($response,true));
+  if($test2[0] != $quo->id){
+
+    echo json_encode(array(
+        'message' => 'No Quotes Found'
+    ));
+    exit();
   }
 
+  // Delete post
+  if($quo->delete()) {
+    echo json_encode(
+      array('message' => 'Quote Deleted')
+    );
+  }

@@ -7,23 +7,24 @@
 
   include_once '../../config/Database.php';
   include_once '../../models/Category.php';
+  
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
   // Instantiate blog post object
-  $category = new Category($db);
+  $cat = new DBCategory($db);
 
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
   // Set ID to UPDATE
-  $category->id = $data->id;
+  $cat->id = $data->id;
 
-  $category->name = $data->name;
+  $cat->category = $data->category;
 
   // Update post
-  if($category->update()) {
+  if($cat->update()) {
     echo json_encode(
       array('message' => 'Category Updated')
     );

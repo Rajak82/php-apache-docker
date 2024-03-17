@@ -6,31 +6,28 @@
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/Database.php';
-  include_once '../../models/Post.php';
+  include_once '../../models/Author.php';
 
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
-  // Instantiate blog post object
-  $post = new Post($db);
+  // Instantiate Author post object
+  $auth = new DBAuthor($db);
 
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
-  $post->title = $data->title;
-  $post->body = $data->body;
-  $post->author = $data->author;
-  $post->category_id = $data->category_id;
+  if ( !isset($data->author) )
+    {
+        echo json_encode(array('message' => 'Missing Required Parameters'));
+        exit();
+    }
+
+  $auth->author = $data->author;
 
   // Create post
-  if($post->create()) {
-    echo json_encode(
-      array('message' => 'Post Created')
-    );
-  } else {
-    echo json_encode(
-      array('message' => 'Post Not Created')
-    );
+  if($auth->create()) {
+    
+    echo 'created author' .  json_encode(array('id' => $db->lastInsertId(), 'author'=>$auth->author));
   }
-

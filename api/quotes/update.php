@@ -6,34 +6,84 @@
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
   include_once '../../config/Database.php';
-  include_once '../../models/Post.php';
+  include_once '../../models/Quote.php';
+  include_once '../../models/Author.php';
+  include_once '../../models/Category.php';
 
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
   // Instantiate blog post object
-  $post = new Post($db);
+  $quo = new DBQuote($db);
 
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
-  // Set ID to update
-  $post->id = $data->id;
+  //data is not set
+  if(!isset($data->id) || !isset($data->quote) || !isset($data->author_id) || !isset($data->category_id)){
+    echo json_encode(array('message' => 'Missing Required Parameters'));
+    exit();
+}
 
-  $post->title = $data->title;
-  $post->body = $data->body;
-  $post->author = $data->author;
-  $post->category_id = $data->category_id;
+  // Set ID to update
+  $quo->id = $data->id;
+  $quo->quote = $data->quote;
+  $quo->author_id = $data->author_id;
+  $quo->category_id = $data->category_id;
+
+
+  $auth = new DBAuthor($db);
+    $cat = new DBCategory($db);
+    $auth->id = $quo->author_id;
+    $cat->id = $quo->category_id;
+
+    //conduct checks on category and author ids
+    $cat->read_single();
+    if(!$cat->category){
+        echo json_encode(array(
+            'message' => 'category_id Not Found'
+        ));
+        exit();
+    }
+
+    $auth->read_single();
+    if(!$auth->author){
+        echo json_encode(array(
+            'message' => 'author_id Not Found'
+        ));
+        exit();
+    }
+
+
+    $test = curl_init('http://localhost/api/quotes/?id=' . $quo->id);
+    curl_setopt($test, CURLOPT_RETURNTRANSFER, true); // Set option to return the response
+    $response = curl_exec($test); // Execute the request and store the response
+    curl_close($test); // Close the cURL session
+    $test2 = array_values(json_decode($response,true));
+    if($test2[0] != $quo->id){
+
+      echo json_encode(array(
+          'message' => 'No Quotes Found'
+      ));
+      exit();
+    }
 
   // Update post
-  if($post->update()) {
-    echo json_encode(
-      array('message' => 'Post Updated')
-    );
-  } else {
-    echo json_encode(
-      array('message' => 'Post Not Updated')
-    );
-  }
+  if($quo->update()) {
+    $result = $quo->read();
+    $num = $result->rowCount();
+    $quo_arr = array();
+    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      extract($row);
+      $quo_item = array(
+        'id' => $id,
+        'quote' => $quote,
+        'author_name' => $author_name,
+        'category_name' => $category_name
+      );
+      array_push($quo_arr, $quo_item);
+    }
+    echo 'updated quote' . json_encode($quo_arr);
+  } 
 

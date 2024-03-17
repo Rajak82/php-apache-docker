@@ -11,10 +11,10 @@
   $db = $database->connect();
 
   // Instantiate category object
-  $category = new Category($db);
+  $cat = new DBCategory($db);
 
   // Category read query
-  $result = $category->read();
+  $result = $cat->read();
   
   // Get row count
   $num = $result->rowCount();
@@ -30,7 +30,7 @@
 
           $cat_item = array(
             'id' => $id,
-            'name' => $name
+            'category' => $category
           );
 
           // Push to "data"

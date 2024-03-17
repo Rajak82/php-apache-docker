@@ -4,30 +4,36 @@
   header('Content-Type: application/json');
 
   include_once '../../config/Database.php';
-  include_once '../../models/Post.php';
+  include_once '../../models/Quote.php';
 
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
   // Instantiate blog post object
-  $post = new Post($db);
+  $quo = new DBQuote($db);
+
 
   // Get ID
-  $post->id = isset($_GET['id']) ? $_GET['id'] : die();
+  $quo->id = isset($_GET['id']) ? $_GET['id'] : die();
+
 
   // Get post
-  $post->read_single();
+  $quo->read_single();
 
   // Create array
-  $post_arr = array(
-    'id' => $post->id,
-    'title' => $post->title,
-    'body' => $post->body,
-    'author' => $post->author,
-    'category_id' => $post->category_id,
-    'category_name' => $post->category_name
+  $quo_arr = array(
+    'id' => $quo->id,
+    'quote' => $quo->quote,
+    'author_name' => $quo->author_name,
+    'category_name' => $quo->category_name,
   );
 
-  // Make JSON
-  print_r(json_encode($post_arr));
+  if($quo_arr['quote']!=null){
+    // Make JSON
+    print_r(json_encode($quo_arr));
+    }else{
+      echo json_encode(
+        array('message' => 'No Quotes Found')
+      );
+    }
