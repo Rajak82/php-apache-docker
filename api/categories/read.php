@@ -23,7 +23,7 @@
   if($num > 0) {
         // Cat array
         $cat_arr = array();
-        $cat_arr['data'] = array();
+        
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
           extract($row);

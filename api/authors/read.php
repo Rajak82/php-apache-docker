@@ -15,6 +15,7 @@
 
   // Blog post query
   $result = $auth->read();
+
   // Get row count
   $num = $result->rowCount();
 
@@ -22,7 +23,7 @@
   if($num > 0) {
     // Post array
     $auth_arr = array();
-    // $posts_arr['data'] = array();
+
 
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
       extract($row);
