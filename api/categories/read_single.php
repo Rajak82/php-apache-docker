@@ -28,7 +28,7 @@
 
   if($category_arr['category']!=null){
   // Make JSON
-  print_r(json_encode($category_arr));
+  echo json_encode($category_arr);
   }else{
     echo json_encode(
       array('message' => 'category_id Not Found')

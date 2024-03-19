@@ -21,7 +21,7 @@
   // Set ID to update
   $auth->id = $data->id;
 
-  $test = curl_init('http://localhost/api/categories/?id=' . $auth->id);
+  $test = curl_init('http://localhost/api/authors/?id=' . $auth->id);
   curl_setopt($test, CURLOPT_RETURNTRANSFER, true); // Set option to return the response
   $response = curl_exec($test); // Execute the request and store the response
   curl_close($test); // Close the cURL session
@@ -37,7 +37,7 @@
   // Delete Author
   if($auth->delete()) {
     echo json_encode(
-      array('message' => 'Author Deleted')
+      array('id' => $auth->id)
     );
   }
 

@@ -37,6 +37,6 @@
   // Delete Category
   if($cat->delete()) {
     echo json_encode(
-      array('message' => 'Category deleted')
+      array('id' => $cat->id)
     );
   } 

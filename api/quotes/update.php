@@ -55,13 +55,13 @@
         exit();
     }
 
-
     $test = curl_init('http://localhost/api/quotes/?id=' . $quo->id);
     curl_setopt($test, CURLOPT_RETURNTRANSFER, true); // Set option to return the response
     $response = curl_exec($test); // Execute the request and store the response
     curl_close($test); // Close the cURL session
     $test2 = array_values(json_decode($response,true));
-    if($test2[0] != $quo->id){
+
+    if($test2[1] != $quo->quote){
 
       echo json_encode(array(
           'message' => 'No Quotes Found'
@@ -69,7 +69,7 @@
       exit();
     }
 
-  // Update post
+  //Update quote
   if($quo->update()) {
     $result = $quo->read();
     $num = $result->rowCount();
@@ -79,11 +79,11 @@
       $quo_item = array(
         'id' => $id,
         'quote' => $quote,
-        'author_name' => $author_name,
-        'category_name' => $category_name
+        'author_id' => $author_id,
+        'category_id' => $category_id
       );
       array_push($quo_arr, $quo_item);
     }
-    echo 'updated quote' . json_encode($quo_arr);
+    echo json_encode($quo_arr);
   } 
 

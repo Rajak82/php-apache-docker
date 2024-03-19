@@ -28,7 +28,7 @@
 
   if($auth_arr['author']!=null){
   // Make JSON
-  print_r(json_encode($auth_arr));
+  echo json_encode($auth_arr);
 }else {
   // No Author
   echo json_encode(

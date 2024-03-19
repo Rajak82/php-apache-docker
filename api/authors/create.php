@@ -29,5 +29,5 @@
   // Create post
   if($auth->create()) {
     
-    echo 'created author' .  json_encode(array('id' => $db->lastInsertId(), 'author'=>$auth->author));
+    echo json_encode(array('id' => $db->lastInsertId(), 'author'=>$auth->author));
   }

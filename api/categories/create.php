@@ -28,5 +28,5 @@
 
   // Create Category
   if($cat->create()) {
-    echo 'created category' .  json_encode(array('id' => $db->lastInsertId(), 'category'=>$cat->category));
+    echo json_encode(array('id' => $db->lastInsertId(), 'category'=>$cat->category));
   }

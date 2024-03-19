@@ -37,6 +37,6 @@
   // Delete post
   if($quo->delete()) {
     echo json_encode(
-      array('message' => 'Quote Deleted')
+      array('id' => $quo->id)
     );
   }
