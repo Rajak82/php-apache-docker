@@ -25,8 +25,8 @@
   $quo_arr = array(
     'id' => $quo->id,
     'quote' => $quo->quote,
-    'author_name' => $quo->author_name,
-    'category_name' => $quo->category_name,
+    'author' => $quo->author_name,
+    'category' => $quo->category_name,
   );
 
   if($quo_arr['quote']!=null){
