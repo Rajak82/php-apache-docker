@@ -61,7 +61,7 @@
     curl_close($test); // Close the cURL session
     $test2 = array_values(json_decode($response,true));
 
-    if($test2[1] != $quo->quote){
+    if($test2[0] != $quo->id){
 
       echo json_encode(array(
           'message' => 'No Quotes Found'
