@@ -31,7 +31,10 @@
 
   if($quo_arr['quote']!=null){
     // Make JSON
-    print_r(json_encode($quo_arr));
+    $json_data = json_encode($quo_arr);
+
+    // Decode HTML entities before echoing
+    echo htmlspecialchars_decode($json_data);
     }else{
       echo json_encode(
         array('message' => 'No Quotes Found')
