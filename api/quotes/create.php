@@ -54,24 +54,18 @@
 
   // Create quote
   if($quo->create()) {
-    $result = $quo->read();
-    $num = $result->rowCount();
-    $quo_arr = array();
-    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      extract($row);
-      $quo_item = array(
-        'id' => $id,
-        'quote' => $quote,
-        'author_id' => $author_id,
-        'category_id' => $category_id
-      );
-      array_push($quo_arr, $quo_item);
-    }
 
-    echo htmlspecialchars_decode(json_encode($quo_arr));
+    $quo->id = $db->lastInsertId();
+
+    $test = curl_init('http://localhost/api/quotes/?id=' . $quo->id);
+  curl_setopt($test, CURLOPT_RETURNTRANSFER, true); // Set option to return the response
+  $response = curl_exec($test); // Execute the request and store the response
+  curl_close($test); // Close the cURL session
+  $test2 = json_decode($response,true);
+  echo json_encode($test2);
+
   } else {
     echo json_encode(
       array('message' => 'Quote Not Created')
     );
   }
-
