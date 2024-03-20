@@ -71,19 +71,13 @@
 
   //Update quote
   if($quo->update()) {
-    $result = $quo->read();
-    $num = $result->rowCount();
-    $quo_arr = array();
-    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      extract($row);
-      $quo_item = array(
-        'id' => $id,
-        'quote' => $quote,
-        'author_id' => $author_id,
-        'category_id' => $category_id
-      );
-      array_push($quo_arr, $quo_item);
-    }
+
+    $quo_arr = array(
+      'id' => $quo->id,
+      'quote' => $quo->quote,
+      'author_id' => $quo->author_id,
+      'category_id' => $quo->category_id,
+    );
     echo json_encode($quo_arr);
   } 
 
