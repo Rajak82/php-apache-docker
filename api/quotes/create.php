@@ -57,12 +57,13 @@
 
     $quo->id = $db->lastInsertId();
 
-    $test = curl_init('http://localhost/api/quotes/?id=' . $quo->id);
-  curl_setopt($test, CURLOPT_RETURNTRANSFER, true); // Set option to return the response
-  $response = curl_exec($test); // Execute the request and store the response
-  curl_close($test); // Close the cURL session
-  $test2 = json_decode($response,true);
-  echo json_encode($test2);
+    $quo_arr = array(
+      'id' => $quo->id,
+      'quote' => $quo->quote,
+      'author_id' => $quo->author_id,
+      'category_id' => $quo->category_id,
+    );
+    echo json_encode($quo_arr);
 
   } else {
     echo json_encode(
